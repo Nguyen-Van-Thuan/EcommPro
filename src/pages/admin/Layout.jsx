@@ -1,14 +1,13 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
-import Footer from "../../components/admin/Footer";
 import Header from "../../components/admin/Header";
+import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/admin/Sidebar";
+import Footer from "../../components/admin/Footer";
 
 const Layout = () => {
   return (
     <>
       <Header />
-
       <div className="container-fluid">
         <div className="row">
           {/* SIDEBAR MENU  */}
@@ -28,3 +27,5 @@ const Layout = () => {
 };
 
 export default Layout;
+
+// alt + shirt + f => format code

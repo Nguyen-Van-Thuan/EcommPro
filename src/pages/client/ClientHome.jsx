@@ -1,9 +1,19 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { URL_PRODUCT_LIST } from "../../components/Untils";
+import useAxios from "../../hooks/useAxios";
+import ClientCartPopup from "../../components/client/ClientCartPopup";
 
 const ClientHome = () => {
+  // Opmail + su dung custom hook useAciox() -> call api
+  const [modalShow, setModalShow] = React.useState(false);
+  const { data, isLoading } = useAxios(URL_PRODUCT_LIST);
+
+  if (isLoading == true) return <h1>Dang lay du lieu ...</h1>;
+
   return (
     <>
-      {/* Header*/}
+      {/* Banner*/}
       <header className="bg-dark py-5">
         <div className="container px-4 px-lg-5 my-5">
           <div className="text-center text-white">
@@ -14,303 +24,66 @@ const ClientHome = () => {
           </div>
         </div>
       </header>
-      {/* Section*/}
+
+      {/* Prouduct*/}
       <section className="py-5">
         <div className="container px-4 px-lg-5 mt-5">
           <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div className="col mb-5">
-              <div className="card h-100">
-                {/* Product image*/}
-                <img
-                  className="card-img-top"
-                  src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                  alt="..."
-                />
-                {/* Product details*/}
-                <div className="card-body p-4">
-                  <div className="text-center">
-                    {/* Product name*/}
-                    <h5 className="fw-bolder">Fancy Product</h5>
-                    {/* Product price*/}
-                    $40.00 - $80.00
-                  </div>
-                </div>
-                {/* Product actions*/}
-                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center">
-                    <a className="btn btn-outline-dark mt-auto" href="#">
-                      View options
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col mb-5">
-              <div className="card h-100">
-                {/* Sale badge*/}
-                <div
-                  className="badge bg-dark text-white position-absolute"
-                  style={{ top: "0.5rem", right: "0.5rem" }}
-                >
-                  Sale
-                </div>
-                {/* Product image*/}
-                <img
-                  className="card-img-top"
-                  src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                  alt="..."
-                />
-                {/* Product details*/}
-                <div className="card-body p-4">
-                  <div className="text-center">
-                    {/* Product name*/}
-                    <h5 className="fw-bolder">Special Item</h5>
-                    {/* Product reviews*/}
-                    <div className="d-flex justify-content-center small text-warning mb-2">
-                      <div className="bi-star-fill" />
-                      <div className="bi-star-fill" />
-                      <div className="bi-star-fill" />
-                      <div className="bi-star-fill" />
-                      <div className="bi-star-fill" />
+            {data.length > 0 &&
+              data.map((value, index) => {
+                // console.log(value);
+                return (
+                  <div className="col mb-5" key={value.id}>
+                    <div className="card h-100">
+                      <Link to={`/product/${value.id}`}>
+                        {/* Product image*/}
+                        <img
+                          className="card-img-top"
+                          src={value.image}
+                          alt="..."
+                        />
+                        {/* Product details*/}
+                        <div className="card-body p-4">
+                          <div className="text-center">
+                            {/* Product name*/}
+                            <h5 className="fw-bolder">{value.title}</h5>
+                            {/* Product price*/}
+                            {value.price} Vnd
+                          </div>
+                        </div>
+                      </Link>
+
+                      {/* Product actions*/}
+                      <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div className="text-center">
+                          <button
+                            className="btn btn-outline-dark mt-auto"
+                            onClick={() => setModalShow(true)}
+                          >
+                            Them gio hang
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                    {/* Product price*/}
-                    <span className="text-muted text-decoration-line-through">
-                      $20.00
-                    </span>
-                    $18.00
                   </div>
-                </div>
-                {/* Product actions*/}
-                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center">
-                    <a className="btn btn-outline-dark mt-auto" href="#">
-                      Add to cart
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col mb-5">
-              <div className="card h-100">
-                {/* Sale badge*/}
-                <div
-                  className="badge bg-dark text-white position-absolute"
-                  style={{ top: "0.5rem", right: "0.5rem" }}
-                >
-                  Sale
-                </div>
-                {/* Product image*/}
-                <img
-                  className="card-img-top"
-                  src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                  alt="..."
-                />
-                {/* Product details*/}
-                <div className="card-body p-4">
-                  <div className="text-center">
-                    {/* Product name*/}
-                    <h5 className="fw-bolder">Sale Item</h5>
-                    {/* Product price*/}
-                    <span className="text-muted text-decoration-line-through">
-                      $50.00
-                    </span>
-                    $25.00
-                  </div>
-                </div>
-                {/* Product actions*/}
-                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center">
-                    <a className="btn btn-outline-dark mt-auto" href="#">
-                      Add to cart
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col mb-5">
-              <div className="card h-100">
-                {/* Product image*/}
-                <img
-                  className="card-img-top"
-                  src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                  alt="..."
-                />
-                {/* Product details*/}
-                <div className="card-body p-4">
-                  <div className="text-center">
-                    {/* Product name*/}
-                    <h5 className="fw-bolder">Popular Item</h5>
-                    {/* Product reviews*/}
-                    <div className="d-flex justify-content-center small text-warning mb-2">
-                      <div className="bi-star-fill" />
-                      <div className="bi-star-fill" />
-                      <div className="bi-star-fill" />
-                      <div className="bi-star-fill" />
-                      <div className="bi-star-fill" />
-                    </div>
-                    {/* Product price*/}
-                    $40.00
-                  </div>
-                </div>
-                {/* Product actions*/}
-                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center">
-                    <a className="btn btn-outline-dark mt-auto" href="#">
-                      Add to cart
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col mb-5">
-              <div className="card h-100">
-                {/* Sale badge*/}
-                <div
-                  className="badge bg-dark text-white position-absolute"
-                  style={{ top: "0.5rem", right: "0.5rem" }}
-                >
-                  Sale
-                </div>
-                {/* Product image*/}
-                <img
-                  className="card-img-top"
-                  src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                  alt="..."
-                />
-                {/* Product details*/}
-                <div className="card-body p-4">
-                  <div className="text-center">
-                    {/* Product name*/}
-                    <h5 className="fw-bolder">Sale Item</h5>
-                    {/* Product price*/}
-                    <span className="text-muted text-decoration-line-through">
-                      $50.00
-                    </span>
-                    $25.00
-                  </div>
-                </div>
-                {/* Product actions*/}
-                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center">
-                    <a className="btn btn-outline-dark mt-auto" href="#">
-                      Add to cart
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col mb-5">
-              <div className="card h-100">
-                {/* Product image*/}
-                <img
-                  className="card-img-top"
-                  src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                  alt="..."
-                />
-                {/* Product details*/}
-                <div className="card-body p-4">
-                  <div className="text-center">
-                    {/* Product name*/}
-                    <h5 className="fw-bolder">Fancy Product</h5>
-                    {/* Product price*/}
-                    $120.00 - $280.00
-                  </div>
-                </div>
-                {/* Product actions*/}
-                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center">
-                    <a className="btn btn-outline-dark mt-auto" href="#">
-                      View options
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col mb-5">
-              <div className="card h-100">
-                {/* Sale badge*/}
-                <div
-                  className="badge bg-dark text-white position-absolute"
-                  style={{ top: "0.5rem", right: "0.5rem" }}
-                >
-                  Sale
-                </div>
-                {/* Product image*/}
-                <img
-                  className="card-img-top"
-                  src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                  alt="..."
-                />
-                {/* Product details*/}
-                <div className="card-body p-4">
-                  <div className="text-center">
-                    {/* Product name*/}
-                    <h5 className="fw-bolder">Special Item</h5>
-                    {/* Product reviews*/}
-                    <div className="d-flex justify-content-center small text-warning mb-2">
-                      <div className="bi-star-fill" />
-                      <div className="bi-star-fill" />
-                      <div className="bi-star-fill" />
-                      <div className="bi-star-fill" />
-                      <div className="bi-star-fill" />
-                    </div>
-                    {/* Product price*/}
-                    <span className="text-muted text-decoration-line-through">
-                      $20.00
-                    </span>
-                    $18.00
-                  </div>
-                </div>
-                {/* Product actions*/}
-                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center">
-                    <a className="btn btn-outline-dark mt-auto" href="#">
-                      Add to cart
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col mb-5">
-              <div className="card h-100">
-                {/* Product image*/}
-                <img
-                  className="card-img-top"
-                  src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                  alt="..."
-                />
-                {/* Product details*/}
-                <div className="card-body p-4">
-                  <div className="text-center">
-                    {/* Product name*/}
-                    <h5 className="fw-bolder">Popular Item</h5>
-                    {/* Product reviews*/}
-                    <div className="d-flex justify-content-center small text-warning mb-2">
-                      <div className="bi-star-fill" />
-                      <div className="bi-star-fill" />
-                      <div className="bi-star-fill" />
-                      <div className="bi-star-fill" />
-                      <div className="bi-star-fill" />
-                    </div>
-                    {/* Product price*/}
-                    $40.00
-                  </div>
-                </div>
-                {/* Product actions*/}
-                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div className="text-center">
-                    <a className="btn btn-outline-dark mt-auto" href="#">
-                      Add to cart
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+                );
+              })}
           </div>
         </div>
       </section>
+      {/* popup cart */}
+      <ClientCartPopup show={modalShow} onHide={() => setModalShow(false)} />
     </>
   );
 };
 
 export default ClientHome;
+
+// HTML khong cho phep the a long the a
+/*
+  <a>
+    <a></a>
+  </a>
+
+  => Loi
+*/

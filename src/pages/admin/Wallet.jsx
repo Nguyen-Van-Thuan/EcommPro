@@ -1,198 +1,105 @@
+import axios from "axios";
 import React from "react";
+import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { URL_PRODUCT_LIST } from "../../components/Untils";
+import Pagination from "../../components/common/Pagination";
+import useGetAxiosPagi from "../../hooks/useGetAxiosPagi";
 
 const Wallet = () => {
+  const { data, isLoading, getApi, currentPage, totalPages, setCurrentPage } =
+    useGetAxiosPagi(URL_PRODUCT_LIST);
+
+  // Xóa sản phẩm
+  const handleDelete = async (id) => {
+    const urlDelete = URL_PRODUCT_LIST + `/` + id;
+
+    try {
+      const response = await axios.delete(urlDelete);
+      if (response.status === 200 || response.status === 204) {
+        alert("xoa thanh cong!");
+        getApi();
+      }
+    } catch (error) {
+      alert("xoa that bai");
+      console.log(error);
+    }
+  };
+
+  if (isLoading === true) return <h4>Đang lấy dữ liệu...</h4>;
+
   return (
     <>
       <div className="title-group mb-3">
-        <h1 className="h2 mb-0">Wallet</h1>
+        <h1 className="h2 mb-0">Sản phẩm</h1>
       </div>
       <div className="row my-4">
         <div className="col-lg-12 col-12">
           <div className="custom-block bg-white">
-            <h5 className="mb-4">Account Activities</h5>
+            <Link to="/dashboad/product/add-product">
+              <Button className="mb-4" variant="success">
+                Thêm mới
+              </Button>{" "}
+            </Link>
+
             <div className="table-responsive">
               <table className="account-table table">
                 <thead>
                   <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col">Time</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Payment Type</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Balance</th>
-                    <th scope="col">Status</th>
+                    <th>Id</th>
+                    <th scope="col">Tên</th>
+                    <th scope="col">Giá</th>
+                    <th scope="col">Danh mục</th>
+                    <th scope="col">Hành động</th>
+                    <th scope="col">Hành động</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td scope="row">July 5, 2023</td>
-                    <td scope="row">10:00 PM</td>
-                    <td scope="row">Shopping</td>
-                    <td scope="row">C2C Transfer</td>
-                    <td className="text-danger" scope="row">
-                      <span className="me-1">-</span>
-                      $100.00
-                    </td>
-                    <td scope="row">$5,500.00</td>
-                    <td scope="row">
-                      <span className="badge text-bg-danger">Pending</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td scope="row">July 2, 2023</td>
-                    <td scope="row">10:42 AM</td>
-                    <td scope="row">Food Delivery</td>
-                    <td scope="row">Mobile Reload</td>
-                    <td className="text-success" scope="row">
-                      <span className="me-1">+</span>
-                      $250
-                    </td>
-                    <td scope="row">$5,600.00</td>
-                    <td scope="row">
-                      <span className="badge text-bg-success">Success</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td scope="row">June 28, 2023</td>
-                    <td scope="row">8:20 PM</td>
-                    <td scope="row">Billing</td>
-                    <td scope="row">Goverment</td>
-                    <td className="text-success" scope="row">
-                      <span className="me-2">+</span>$50
-                    </td>
-                    <td scope="row">$5,350.00</td>
-                    <td scope="row">
-                      <span className="badge text-bg-success">Success</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td scope="row">June 24, 2023</td>
-                    <td scope="row">10:48 PM</td>
-                    <td scope="row">Shopee</td>
-                    <td scope="row">QR Code</td>
-                    <td className="text-danger" scope="row">
-                      <span className="me-2">-</span>$380
-                    </td>
-                    <td scope="row">$5,300.00</td>
-                    <td scope="row">
-                      <span className="badge text-bg-dark">Cancelled</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td scope="row">June 12, 2023</td>
-                    <td scope="row">12:30 AM</td>
-                    <td scope="row">Food Delivery</td>
-                    <td scope="row">Mobile Reload</td>
-                    <td className="text-success" scope="row">
-                      <span className="me-2">+</span>$250
-                    </td>
-                    <td scope="row">$4,920.00</td>
-                    <td scope="row">
-                      <span className="badge text-bg-success">Success</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td scope="row">May 31, 2023</td>
-                    <td scope="row">2:40 PM</td>
-                    <td scope="row">Food Delivery</td>
-                    <td scope="row">Mobile Reload</td>
-                    <td className="text-success" scope="row">
-                      <span className="me-2">+</span>$50
-                    </td>
-                    <td scope="row">$4,920.00</td>
-                    <td scope="row">
-                      <span className="badge text-bg-success">Success</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td scope="row">May 22, 2023</td>
-                    <td scope="row">8:50 AM</td>
-                    <td scope="row">Food Delivery</td>
-                    <td scope="row">Mobile Reload</td>
-                    <td className="text-success" scope="row">
-                      <span className="me-2">+</span>$50
-                    </td>
-                    <td scope="row">$4,920.00</td>
-                    <td scope="row">
-                      <span className="badge text-bg-success">Success</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td scope="row">May 20, 2023</td>
-                    <td scope="row">6:45 PM</td>
-                    <td scope="row">Food Delivery</td>
-                    <td scope="row">Mobile Reload</td>
-                    <td className="text-danger" scope="row">
-                      <span className="me-2">-</span>$500
-                    </td>
-                    <td scope="row">$4,920.00</td>
-                    <td scope="row">
-                      <span className="badge text-bg-danger">Pending</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td scope="row">April 28, 2023</td>
-                    <td scope="row">11:20 AM</td>
-                    <td scope="row">Food Delivery</td>
-                    <td scope="row">Mobile Reload</td>
-                    <td className="text-success" scope="row">
-                      <span className="me-2">+</span>$856
-                    </td>
-                    <td scope="row">$4,920.00</td>
-                    <td scope="row">
-                      <span className="badge text-bg-success">Success</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td scope="row">April 16, 2023</td>
-                    <td scope="row">11:00 PM</td>
-                    <td scope="row">Food Delivery</td>
-                    <td scope="row">Mobile Reload</td>
-                    <td className="text-success" scope="row">
-                      <span className="me-2">+</span>$50
-                    </td>
-                    <td scope="row">$4,920.00</td>
-                    <td scope="row">
-                      <span className="badge text-bg-danger">Pending</span>
-                    </td>
-                  </tr>
+                  {data.length <= 0 && (
+                    <tr>
+                      <td colSpan={6}>Chưa có sản phẩm nào.</td>
+                    </tr>
+                  )}
+                  {data.length > 0 &&
+                    data.map((value) => {
+                      return (
+                        <tr key={value.id}>
+                          <td>{value.id}</td>
+                          <td scope="row">
+                            {value.title || "Không có dữ liệu"}
+                          </td>
+                          <td scope="row">
+                            {value.price || "Không có dữ liệu"}
+                          </td>
+                          <td scope="row">
+                            {value.category || "Không có dữ liệu"}
+                          </td>
+                          <td scope="row">
+                            <Link to={`/dashboad/product/edit/${value.id}`}>
+                              <Button variant="warning">Chỉnh sửa</Button>
+                            </Link>
+                          </td>
+
+                          <td scope="row">
+                            <Button
+                              variant="danger"
+                              onClick={() => handleDelete(value.id)}
+                            >
+                              Xoá SP
+                            </Button>
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>
-            <nav aria-label="Page navigation example">
-              <ul className="pagination justify-content-center mb-0">
-                <li className="page-item">
-                  <a className="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">Prev</span>
-                  </a>
-                </li>
-                <li className="page-item active" aria-current="page">
-                  <a className="page-link" href="#">
-                    1
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a className="page-link" href="#">
-                    2
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a className="page-link" href="#">
-                    3
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a className="page-link" href="#">
-                    4
-                  </a>
-                </li>
-                <li className="page-item">
-                  <a className="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">Next</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+            />
           </div>
         </div>
       </div>
@@ -201,3 +108,5 @@ const Wallet = () => {
 };
 
 export default Wallet;
+
+// Documentation Pagination: https://www.npmjs.com/package/json-server/v/0.17.4#paginate

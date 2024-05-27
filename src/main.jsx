@@ -8,10 +8,13 @@ import "./assets/css/bootstrap-icons.css"
 import "./assets/css/apexcharts.css"
 import "./assets/css/main.css"
 
+// import css react bootstrap
+// import 'bootstrap/dist/css/bootstrap.min.css';
+
 // import js dasbhoad
 import "./assets/js/jquery.min.js"
 import "./assets/js/bootstrap.bundle.min.js"
-// import "./assets/js/apexcharts.min.js"
+import "./assets/js/apexcharts.min.js"
 // import "./assets/js/custom.js"
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -19,3 +22,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <App />
   </React.StrictMode>,
 )
+
+
+// React minh khong su dung theo js thuan hoac jquery
